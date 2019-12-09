@@ -1,5 +1,6 @@
 import customFetch from '../util/fetch-wrapper';
 import getApiKey from './ApiKey';
+import {getFavoriteFoods} from './FavoriteFoods';
 
 const ENDPOINT = 'https://api.nal.usda.gov/fdc/v1';
 
@@ -9,6 +10,16 @@ export async function searchFoods(searchOptions = {}) {
   const searchCriteria = getSearchCriteria(searchOptions);
 
   const result = await customFetch(url, searchCriteria);
+
+  const favoriteFoods = getFavoriteFoods();
+
+  // Mark favorite foods in search result before returning.
+  result.foods = result.foods.map(food => {
+    if (favoriteFoods[food.fdcId]) {
+      food.isFavorite = true;
+    }
+    return food;
+  });
 
   return result;
 };

@@ -13,7 +13,7 @@ export default async function customFetch(url, body) {
   };
 
   if (body) {
-    requestOptions.body = body;
+    requestOptions.body = JSON.stringify(body);
   }
 
   const request = new Request(url, requestOptions);

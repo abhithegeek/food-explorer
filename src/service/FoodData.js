@@ -10,7 +10,6 @@ export async function searchFoods(searchOptions = {}) {
 
   const result = await customFetch(url, searchCriteria);
 
-  // TODO: Process the result.
   return result;
 };
 
@@ -20,7 +19,6 @@ export async function getFoodDetails(foodId) {
 
   const result  = await customFetch(url);
 
-  // TODO: Process the result.
   return result
 };
 
@@ -30,9 +28,9 @@ function getSearchCriteria(searchOptions) {
     ingredients: searchOptions.ingredients || '',
     brandOwner: searchOptions.brandOwner || '',
     includeDataTypes: {
-      'Survey (FNDDS)': false,
-      Foundation: true,
-      Branded: false
+      'Survey (FNDDS)': searchOptions.includeSurvey || false,
+      Foundation: searchOptions.includeFoundation || false,
+      Branded: searchOptions.includeBranded || false
     },
     pageNumber: searchOptions.pageNumber || 1,
     requireAllWords: true,

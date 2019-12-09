@@ -5,7 +5,9 @@ export function getFavoriteFoods() {
 }
 
 export function addFavoriteFood(food) {
-    return localDb.addRow(food);
+    const {fdcId, description} = food;
+
+    return localDb.addRow({fdcId, description});
 }
 
 export function deleteFavoriteFood(foodId) {

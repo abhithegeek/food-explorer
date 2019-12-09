@@ -1,5 +1,10 @@
 const DB_TABLE = 'FAVORITE_FOODS';
+const ID_ATTRIBUTE = 'fdcId';
 
+/* Implement local-db using local storage.
+ * DB_TABLE is an object (map). fdcId is the
+ * key for the map and value is the object itself.
+ */
 export default {
     getAllRows: function () {
         const data = localStorage.getItem(DB_TABLE);
@@ -10,31 +15,22 @@ export default {
             result = JSON.parse(data);
         }
 
-        return result;
+        // return array of values.
+        return Object.values(result);
     },
 
     addRow: function (row) {
+        let records = {};
         const data = localStorage.getItem(DB_TABLE);
-        let records = [];
 
         if (data) {
             records = JSON.parse(data);
         }
 
-        let found;
+        const key = row[ID_ATTRIBUTE];
+        records[key] = row;
 
-        records.some((record, index) => {
-            if (record.id === row.id) {
-                found = index;
-                return true;
-            }
-            return false;
-        });
-
-        if (!found) {
-            records.push(row);
-            localStorage.setItem(DB_TABLE, JSON.stringify(records));
-        }
+        localStorage.setItem(DB_TABLE, JSON.stringify(records));
     },
 
     deleteRow: function (rowId) {
@@ -45,19 +41,7 @@ export default {
             records = JSON.parse(data);
         }
 
-        let found;
-
-        records.some((record, index) => {
-            if (record.id === rowId) {
-                found = index;
-                return true;
-            }
-            return false;
-        });
-
-        if (found) {
-            records.splice(found, 1);
-            localStorage.setItem(DB_TABLE, JSON.stringify(records));
-        }
+        delete records[rowId];
+        localStorage.setItem(DB_TABLE, JSON.stringify(records));
     }
 }

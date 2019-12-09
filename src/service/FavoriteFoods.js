@@ -1,19 +1,11 @@
 import localDb from '../util/local-db';
 
 export function getFavoriteFoods() {
-    return localDb.getAllRows().map(row => {
-        return {
-            fdcId: row.id,
-            description: row.description
-        };
-    });
+    return localDb.getAllRows();
 }
 
 export function addFavoriteFood(food) {
-    return localDb.addRow({
-        id: food.fdcId,
-        description: food.description
-    });
+    return localDb.addRow(food);
 }
 
 export function deleteFavoriteFood(foodId) {

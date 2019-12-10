@@ -9,7 +9,7 @@ export default {
     getAllRows: function () {
         const data = localStorage.getItem(DB_TABLE);
 
-        let result = [];
+        let result = {};
 
         if (data) {
             result = JSON.parse(data);
@@ -18,6 +18,19 @@ export default {
         // return array of values.
         return Object.values(result);
     },
+
+    getAllRowsMap: function () {
+        const data = localStorage.getItem(DB_TABLE);
+
+        let result = {};
+
+        if (data) {
+            result = JSON.parse(data);
+        }
+
+        return result;
+    },
+
 
     addRow: function (row) {
         let records = {};
